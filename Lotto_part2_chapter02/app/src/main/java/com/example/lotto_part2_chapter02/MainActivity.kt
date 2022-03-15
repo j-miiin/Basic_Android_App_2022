@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity() {
@@ -51,11 +52,24 @@ class MainActivity : AppCompatActivity() {
 
         initRunButton()
         initAddButton()
+        initClearButton()
     }
 
     private fun initRunButton() {
         runButton.setOnClickListener {
             val list = getRandomNumber()
+
+            didRun = true
+
+            list.forEachIndexed { index, number ->
+                val textView = numberTextViewList[index]
+
+                textView.text = number.toString()
+                textView.isVisible = true
+
+                setNumberBackground(number, textView)
+
+            }
 
             Log.d("MainActivity", list.toString())
         }
@@ -82,7 +96,31 @@ class MainActivity : AppCompatActivity() {
             textView.isVisible = true
             textView.text = numberPicker.value.toString()
 
+            setNumberBackground(numberPicker.value, textView)
+
             pickNumberSet.add(numberPicker.value)
+        }
+    }
+
+    private fun setNumberBackground(number: Int, textView: TextView) {
+        when(number) {
+            // drawable은 안드로이드 앱에 저장되어 있으므로 context에서 가져옴
+            in 1..10 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_yellow)
+            in 11..20 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_blue)
+            in 21..30 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_red)
+            in 31..40 -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_gray)
+            else -> textView.background = ContextCompat.getDrawable(this, R.drawable.circle_green)
+        }
+    }
+
+    private fun initClearButton() {
+        clearButton.setOnClickListener {
+            pickNumberSet.clear()
+            numberTextViewList.forEach {
+                it.isVisible = false
+            }
+
+            didRun = false
         }
     }
 
@@ -90,13 +128,19 @@ class MainActivity : AppCompatActivity() {
         val numberList = mutableListOf<Int>()
             .apply {
                 for (i in 1..45) {
+                    // 이미 선택한 번호는 제외
+                    if (pickNumberSet.contains(i)) {
+                        continue
+                    }
+
                     this.add(i)
                 }
             }
 
         numberList.shuffle()
 
-        val newList = numberList.subList(0, 6)
+        // 이미 선택된 번호 set을 리스트로 변환 후 합침침
+        val newList = pickNumberSet.toList() + numberList.subList(0, 6 - pickNumberSet.size)
 
         return newList.sorted()
     }
