@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/coding/Android Study/Basic_Android_App_2022/PomodoroTimer_part2_chapter06/app/src/main/res/drawable/drawable_tick_mark.xml" value="0.1405" />
+        <entry key="..\:/coding/Android Study/Basic_Android_App_2022/PomodoroTimer_part2_chapter06/app/src/main/res/drawable/ic_baseline_unfold_less_24.xml" value="0.1405" />
         <entry key="..\:/coding/Android Study/Basic_Android_App_2022/PomodoroTimer_part2_chapter06/app/src/main/res/layout/activity_main.xml" value="0.2692502532928065" />
       </map>
     </option>
