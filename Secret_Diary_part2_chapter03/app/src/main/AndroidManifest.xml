@@ -16,7 +16,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Secret_Diary_part2_chapter03.NoActionBar">
+            android:theme="@style/Theme.Secret_Diary_part2_chapter03">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
